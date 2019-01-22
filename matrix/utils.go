@@ -2,7 +2,12 @@ package matrix
 
 // ValidateMatrixs check if both matrix are equals.
 func ValidateMatrixs(a, b *[][]int) bool {
-	return true // Temporary
+	return len(*a) == len(*b) && len((*a)[0]) == len((*b)[0])
+}
+
+// ValidateMatrixsDifferent check if both matrix are equals or equivalents
+func ValidateMatrixsDifferent(a, b *[][]int) bool {
+	return len(*a) == len((*b)[0]) && len(*b) == len((*a)[0])
 }
 
 // AddOrSub is a function for provide help and minify the source

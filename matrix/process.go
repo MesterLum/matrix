@@ -49,12 +49,17 @@ func Mul(a *[][]int, mul int) *[][]int {
 
 // MulCommutative ...
 func MulCommutative(a, b *[][]int) (*[][]int, error) {
-	// Here is necessary the validation
+	if !ValidateMatrixsDifferent(a, b) {
+		return nil, errors.New("the matrixs are not equals")
+	}
 	return MultiplicationCon(a, b), nil
 }
 
 // MulNonCommutative ...
 func MulNonCommutative(a, b *[][]int) (*[][]int, error) {
+	if !ValidateMatrixsDifferent(a, b) {
+		return nil, errors.New("the matrixs are not equals")
+	}
 	return MultiplicationCon(a, b), nil
 }
 
