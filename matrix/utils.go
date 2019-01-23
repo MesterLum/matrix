@@ -1,20 +1,20 @@
 package matrix
 
 // ValidateMatrixs check if both matrix are equals.
-func ValidateMatrixs(a, b *[][]int) bool {
+func ValidateMatrixs(a, b *[][]float64) bool {
 	return len(*a) == len(*b) && len((*a)[0]) == len((*b)[0])
 }
 
 // ValidateMatrixsDifferent check if both matrix are equals or equivalents
-func ValidateMatrixsDifferent(a, b *[][]int) bool {
+func ValidateMatrixsDifferent(a, b *[][]float64) bool {
 	return len(*a) == len((*b)[0]) && len(*b) == len((*a)[0])
 }
 
 // AddOrSub is a function for provide help and minify the source
-func AddOrSub(a, b *[][]int, isAdd bool) *[][]int {
-	var newMatrix [][]int
+func AddOrSub(a, b *[][]float64, isAdd bool) *[][]float64 {
+	var newMatrix [][]float64
 	for indexA, sub := range *a {
-		var subVector []int
+		var subVector []float64
 		for indexB := range sub {
 			if isAdd {
 				subVector = append(subVector, (*a)[indexA][indexB]+(*b)[indexA][indexB])
@@ -29,10 +29,10 @@ func AddOrSub(a, b *[][]int, isAdd bool) *[][]int {
 }
 
 // InverseMatrix ...
-func InverseMatrix(a *[][]int) *[][]int {
-	newMatrix := make([][]int, len((*a)[0]))
+func InverseMatrix(a *[][]float64) *[][]float64 {
+	newMatrix := make([][]float64, len((*a)[0]))
 	for i := range newMatrix {
-		newMatrix[i] = make([]int, len(*a))
+		newMatrix[i] = make([]float64, len(*a))
 	}
 	for indexA, sub := range *a {
 
@@ -46,18 +46,17 @@ func InverseMatrix(a *[][]int) *[][]int {
 }
 
 // MultiplicationCon ...
-func MultiplicationCon(a, b *[][]int) *[][]int {
-	var newMatrix [][]int
+func MultiplicationCon(a, b *[][]float64) *[][]float64 {
+	var newMatrix [][]float64
 
 	for _, subA := range *a {
-		var subVector []int
+		var subVector []float64
 		for indexBB := range (*b)[0] {
-			accum := 0
+			var accum float64 = 0.0
 			for indexAA, d := range subA {
 				accum += d * (*b)[indexAA][indexBB]
 			}
 			subVector = append(subVector, accum)
-			accum = 0
 		}
 		newMatrix = append(newMatrix, subVector)
 

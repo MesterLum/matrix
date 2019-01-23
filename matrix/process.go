@@ -6,7 +6,7 @@ import (
 )
 
 // Add function return error or the new matrix with the new values.
-func Add(a, b *[][]int) (*[][]int, error) {
+func Add(a, b *[][]float64) (*[][]float64, error) {
 	if !ValidateMatrixs(a, b) {
 		return nil, errors.New("matrixs no are equals")
 	}
@@ -15,7 +15,7 @@ func Add(a, b *[][]int) (*[][]int, error) {
 }
 
 // Sub function return error or the new matrix with the new values sub.
-func Sub(a, b *[][]int) (*[][]int, error) {
+func Sub(a, b *[][]float64) (*[][]float64, error) {
 	if !ValidateMatrixs(a, b) {
 		return nil, errors.New("matrixs no are equals")
 	}
@@ -24,7 +24,7 @@ func Sub(a, b *[][]int) (*[][]int, error) {
 }
 
 // Div function divide the matrix.
-func Div(a *[][]int, div float64) *[][]float64 {
+func Div(a *[][]float64, div float64) *[][]float64 {
 	var newMatrix [][]float64
 	for indexA, sub := range *a {
 		var subVector []float64
@@ -36,10 +36,10 @@ func Div(a *[][]int, div float64) *[][]float64 {
 }
 
 // Mul function return the matrix mul.
-func Mul(a *[][]int, mul int) *[][]int {
-	var newMatrix [][]int
+func Mul(a *[][]float64, mul float64) *[][]float64 {
+	var newMatrix [][]float64
 	for indexA, sub := range *a {
-		var subVector []int
+		var subVector []float64
 		for indexB := range sub {
 			subVector = append(subVector, (*a)[indexA][indexB]*mul)
 		}
@@ -48,7 +48,7 @@ func Mul(a *[][]int, mul int) *[][]int {
 }
 
 // MulCommutative ...
-func MulCommutative(a, b *[][]int) (*[][]int, error) {
+func MulCommutative(a, b *[][]float64) (*[][]float64, error) {
 	if !ValidateMatrixsDifferent(a, b) {
 		return nil, errors.New("the matrixs are not equals")
 	}
@@ -56,20 +56,20 @@ func MulCommutative(a, b *[][]int) (*[][]int, error) {
 }
 
 // MulNonCommutative ...
-func MulNonCommutative(a, b *[][]int) (*[][]int, error) {
-	if !ValidateMatrixsDifferent(a, b) {
+func MulNonCommutative(a, b *[][]float64) (*[][]float64, error) {
+	/*if !ValidateMatrixsDifferent(a, b) {
 		return nil, errors.New("the matrixs are not equals")
-	}
+	}*/
 	return MultiplicationCon(a, b), nil
 }
 
 // Transponse ...
-func Transponse(a *[][]int) *[][]int {
+func Transponse(a *[][]float64) *[][]float64 {
 	return InverseMatrix(a)
 }
 
 // VectorLength ...
-func VectorLength(v *[]int) float64 {
+func VectorLength(v *[]float64) float64 {
 	vLength := 0.0
 
 	for _, v := range *v {
@@ -80,13 +80,41 @@ func VectorLength(v *[]int) float64 {
 }
 
 // DotProduct ...
-func DotProduct(a, b *[]int) (int, error) {
+func DotProduct(a, b *[]float64) (float64, error) {
 
-	result := 0
+	var result float64 = 0.0
 	for index := range *a {
 		result += (*a)[index] * (*b)[index]
 	}
 
 	return result, nil
 
+}
+
+// BooleanToBipolar ...
+func BooleanToBipolar(a *[][]float64) *[][]float64 {
+	var newMatrix [][]float64
+
+	for _, sub := range *a {
+		var subVector []float64
+		for _, value := range sub {
+			subVector = append(subVector, float64(2*value-1))
+		}
+		newMatrix = append(newMatrix, subVector)
+	}
+	return &newMatrix
+}
+
+// BipolarToBoolean ...
+func BipolarToBoolean(a *[][]float64) *[][]float64 {
+	var newMatrix [][]float64
+
+	for _, sub := range *a {
+		var subVector []float64
+		for _, value := range sub {
+			subVector = append(subVector, float64((value+1)/2))
+		}
+		newMatrix = append(newMatrix, subVector)
+	}
+	return &newMatrix
 }
